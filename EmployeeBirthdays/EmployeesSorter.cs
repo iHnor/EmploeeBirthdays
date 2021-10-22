@@ -26,19 +26,15 @@ namespace EmployeeBirthdays
             }
         }
 
-        public Dictionary<int, List<Employee>> GetEmploiesWithplaningHorizont(int planingHorizont){
+        public Dictionary<int, List<Employee>> GetSortEmploies(int key)
+        {
             Dictionary<int, List<Employee>> result = new Dictionary<int, List<Employee>>();
-            DateTime tempDate = currentDate;
-            int endMonth = currentDate.Month + planingHorizont >= 12? (currentDate.Month + planingHorizont) % 12: currentDate.Month + planingHorizont;
-
-            while(tempDate.Month != endMonth + 1){
-                if(emploies.ContainsKey(tempDate.Month)){
-                    result.Add(tempDate.Month, emploies[tempDate.Month]);
-                }
-                tempDate = tempDate.AddMonths(1);
-            }
-
+            result.Add(key, emploies[key]);
             return result;
+        }
+        public bool isElemInDictionary(int key)
+        {
+            return emploies.ContainsKey(key);
         }
     }
 }

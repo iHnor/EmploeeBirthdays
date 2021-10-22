@@ -22,40 +22,48 @@ namespace EmployeeBirthdays
         }
     }
     class Program
-    {   
+    {
         static void Main(string[] args)
         {
-            int planingHorisont = 1;
-            
+            int planingHorisont = 12;
+
             List<Employee> listOfEmployee = new List<Employee>{
                 (new Employee("Ваня Иванов", new DateTime(2001, 10, 21))),
                 (new Employee("Петя Петров", new DateTime(2008, 11, 12))),
                 (new Employee("Коля Новогодний", new DateTime(2007, 10, 1))),
-                (new Employee("Стас Рождественский", new DateTime(1992, 12, 25)))
+                (new Employee("Стас Рождественский", new DateTime(1992, 4, 25)))
             };
 
             EmployeesSorter sorter = new EmployeesSorter(listOfEmployee);
             PrintBirthday(sorter, planingHorisont);
         }
-        static void PrintBirthday(EmployeesSorter sorter,int plan)
+        static void PrintBirthday(EmployeesSorter sorter, int plan)
         {
             DateTime totalDate = DateTime.Now;
 
-            foreach(var i in sorter.GetEmploiesWithplaningHorizont(plan)){
-                Console.WriteLine($"{ConvertMonth(i.Key - 1)} {totalDate.Year}");
-                foreach(Employee j in i.Value){
-                    string day = j.getDateBirth().ToString("dd");
-                    string name = j.getName();
-                    DateTime age = j.getDateBirth();
-                    Console.WriteLine($"({day}) - {name} ({getAge(age)})");
+            for (int j = 0; j <= plan; j++)
+            {
+                if (sorter.isElemInDictionary(totalDate.Month))
+                {
+                    foreach (var i in sorter.GetSortEmploies(totalDate.Month))
+                    {
+                        Console.WriteLine($"{ConvertMonth(i.Key - 1)} {totalDate.Year}");
+                        foreach (Employee value in i.Value)
+                        {
+                            string day = value.getDateBirth().ToString("dd");
+                            string name = value.getName();
+                            DateTime age = value.getDateBirth();
+                            Console.WriteLine($"({day}) - {name} ({getAge(age, totalDate)})");
+                        }
+                    }
                 }
+
+                totalDate = totalDate.AddMonths(1);
             }
         }
-        static string getAge(DateTime date)
+        static string getAge(DateTime date, DateTime totalDate)
         {
-            DateTime totalDate = DateTime.Today;
             int age = totalDate.Subtract(date).Days / 365;
-
             return pluralization(age + 1);
         }
         static string pluralization(int numberOfAge)
