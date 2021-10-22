@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0ZrfNw052eYcyp+i4TpiVnKQ8Sl3UhKX72NuqeEGr+VZ2z7YBIN591jGOygwNFLQ0epuIyxEKUR6KBGuTlO6JQ==",
+  "dgSpecHash": "N7G9Ev82oPwQQ7Pispo8CZOT/EgMzyzDAWcjIC4QguFMwZCDAeF3KIAvPD0x5uRUOSkANYcX4VBmQEaK0IdUuQ==",
   "success": true,
-  "projectFilePath": "/home/intern/projects/Collections/EmployeeBirthdays/EmployeeBirthdays.csproj",
+  "projectFilePath": "/home/intern/projects/Collections/EmploeeBirthdays/EmployeeBirthdays/EmployeeBirthdays.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

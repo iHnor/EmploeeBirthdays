@@ -3,20 +3,14 @@ using System.Collections.Generic;
 
 namespace EmployeeBirthdays
 {
-    class Employee
+    public class Employee
     {
         private string nameOfPerson;
         private DateTime birthday;
-
         public Employee(string nameOfPerson, DateTime birthday)
         {
             this.nameOfPerson = nameOfPerson;
             this.birthday = birthday;
-        }
-        public override string ToString()
-        {
-            String result = $"{nameOfPerson}: {birthday}";
-            return result;
         }
         public string getName()
         {
@@ -28,58 +22,33 @@ namespace EmployeeBirthdays
         }
     }
     class Program
-    {
+    {   
         static void Main(string[] args)
         {
-            int planingHorisont = 0;
-
-            Employee[] listOfEmployee = {
+            int planingHorisont = 1;
+            
+            List<Employee> listOfEmployee = new List<Employee>{
                 (new Employee("Ваня Иванов", new DateTime(2001, 10, 21))),
-                (new Employee("Петя Петров", new DateTime(2008, 6, 12))),
-                (new Employee("Коля Новогодний", new DateTime(2007, 10, 25))),
-                (new Employee("Стас Рождественский", new DateTime(1992, 1, 25)))
+                (new Employee("Петя Петров", new DateTime(2008, 11, 12))),
+                (new Employee("Коля Новогодний", new DateTime(2007, 10, 1))),
+                (new Employee("Стас Рождественский", new DateTime(1992, 12, 25)))
             };
-            // Dictionary<string, DateTime> listOfEmployee = new Dictionary<string, DateTime>{
-            //     {"Ваня Иванов", new DateTime(2001, 10, 21)},
-            //     {"Петя Петров", new DateTime(2008, 6, 12)},
-            //     {"Коля Новогодний", new DateTime(2007, 10, 25)},
-            //     {"Стас Рождественский", new DateTime(1992, 1, 25)}
-            // };
 
-            PrintBirthday(listOfEmployee, planingHorisont);
+            EmployeesSorter sorter = new EmployeesSorter(listOfEmployee);
+            PrintBirthday(sorter, planingHorisont);
         }
-        static void PrintBirthday(Employee[] listOfEmployee, int plan)
+        static void PrintBirthday(EmployeesSorter sorter,int plan)
         {
-            DateTime totalDate = DateTime.Today;
-            int totalYear = totalDate.Year;
-            int totalMonth = totalDate.Month;
-            // System.Console.WriteLine(totalDate);
+            DateTime totalDate = DateTime.Now;
 
-            Dictionary<int, List<string>> sortList = new Dictionary<int, List<string>>();
-            foreach (Employee person in listOfEmployee)
-            {
-                int month = person.getDateBirth().Month;
-                if (!sortList.ContainsKey(month)){
-                    List<Employee> list = person;
-
-                    sortList.Add(month, );
+            foreach(var i in sorter.GetEmploiesWithplaningHorizont(plan)){
+                Console.WriteLine($"{ConvertMonth(i.Key - 1)} {totalDate.Year}");
+                foreach(Employee j in i.Value){
+                    string day = j.getDateBirth().ToString("dd");
+                    string name = j.getName();
+                    DateTime age = j.getDateBirth();
+                    Console.WriteLine($"({day}) - {name} ({getAge(age)})");
                 }
-            }
-
-            for (int i = 0; i <= plan; i++)
-            {
-                System.Console.WriteLine($"{ConvertMonth(totalMonth - 1)} {totalYear}");
-                Employee totalPerson = listOfEmployee[0];
-                int persinDay = totalPerson.getDateBirth().Day;
-                string persinName = totalPerson.getName();
-                string personAge = getAge(totalPerson.getDateBirth());
-
-                System.Console.WriteLine($"({persinDay}) - {persinName} ({personAge})");
-                // foreach(Employee person in listOfEmployee){
-
-
-
-                // }
             }
         }
         static string getAge(DateTime date)
