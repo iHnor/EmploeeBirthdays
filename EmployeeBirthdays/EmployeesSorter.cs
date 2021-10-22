@@ -9,32 +9,32 @@ namespace EmployeeBirthdays
     public class EmployeesSorter
     {
         private DateTime currentDate = DateTime.Today;
-        private Dictionary<int, List<Employee>> emploies = new Dictionary<int, List<Employee>>();
+        private Dictionary<int, List<Employee>> employeesByMonth = new Dictionary<int, List<Employee>>();
 
-        public EmployeesSorter(List<Employee> emploies)
+        public EmployeesSorter(List<Employee> employees)
         {
+            // сортування по дню народження
+            employees.OrderBy(x => x.getDateBirth());
 
-            emploies.OrderBy(x => x.getDateBirth());
-
-            foreach (var i in emploies)
+            foreach (var emp in employees)
             {
-                if (!this.emploies.ContainsKey(i.getDateBirth().Month))
+                if (!this.employeesByMonth.ContainsKey(emp.getDateBirth().Month))
                 {
-                    this.emploies.Add(i.getDateBirth().Month, new List<Employee>());
+                    this.employeesByMonth.Add(emp.getDateBirth().Month, new List<Employee>());
                 }
-                this.emploies[i.getDateBirth().Month].Add(i);
+                this.employeesByMonth[emp.getDateBirth().Month].Add(emp);
             }
         }
 
-        public Dictionary<int, List<Employee>> GetSortEmploies(int key)
+        public Dictionary<int, List<Employee>> GetSortEmployees(int key)
         {
             Dictionary<int, List<Employee>> result = new Dictionary<int, List<Employee>>();
-            result.Add(key, emploies[key]);
+            result.Add(key, employeesByMonth[key]);
             return result;
         }
         public bool isElemInDictionary(int key)
         {
-            return emploies.ContainsKey(key);
+            return employeesByMonth.ContainsKey(key);
         }
     }
 }

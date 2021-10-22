@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Globalization;
 namespace EmployeeBirthdays
 {
     public class Employee
@@ -25,7 +25,7 @@ namespace EmployeeBirthdays
     {
         static void Main(string[] args)
         {
-            int planingHorisont = 12;
+            int planingHorizon = 12;
 
             List<Employee> listOfEmployee = new List<Employee>{
                 (new Employee("Ваня Иванов", new DateTime(2001, 10, 21))),
@@ -35,35 +35,37 @@ namespace EmployeeBirthdays
             };
 
             EmployeesSorter sorter = new EmployeesSorter(listOfEmployee);
-            PrintBirthday(sorter, planingHorisont);
+            PrintBirthday(sorter, planingHorizon);
         }
         static void PrintBirthday(EmployeesSorter sorter, int plan)
         {
-            DateTime totalDate = DateTime.Now;
-
+            DateTime today = DateTime.Now;
+            
             for (int j = 0; j <= plan; j++)
             {
-                if (sorter.isElemInDictionary(totalDate.Month))
+                if (sorter.isElemInDictionary(today.Month))
                 {
-                    foreach (var i in sorter.GetSortEmploies(totalDate.Month))
-                    {
-                        Console.WriteLine($"{ConvertMonth(i.Key - 1)} {totalDate.Year}");
+                    foreach (var i in sorter.GetSortEmployees(today.Month))
+                    { 
+                        string month = today.ToString("MMMM", CultureInfo.GetCultureInfo("ru-RU"));
+                        System.Console.WriteLine($"{month} {today.Year}");
                         foreach (Employee value in i.Value)
                         {
                             string day = value.getDateBirth().ToString("dd");
                             string name = value.getName();
                             DateTime age = value.getDateBirth();
-                            Console.WriteLine($"({day}) - {name} ({getAge(age, totalDate)})");
+                            Console.WriteLine($"({day}) - {name} ({getAge(age, today)})");
                         }
                     }
                 }
 
-                totalDate = totalDate.AddMonths(1);
+                today = today.AddMonths(1);
             }
         }
         static string getAge(DateTime date, DateTime totalDate)
         {
             int age = totalDate.Subtract(date).Days / 365;
+
             return pluralization(age + 1);
         }
         static string pluralization(int numberOfAge)
