@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-using System.Linq;
-
 
 namespace EmployeeBirthdays
 {
@@ -13,8 +11,6 @@ namespace EmployeeBirthdays
 
         public EmployeesSorter(List<Employee> employees)
         {
-            // сортування по дню народження
-            employees.OrderBy(x => x.getDateBirth());
 
             foreach (var emp in employees)
             {
@@ -26,12 +22,13 @@ namespace EmployeeBirthdays
             }
         }
 
-        public Dictionary<int, List<Employee>> GetSortEmployees(int key)
+        public List<Employee> GetSortEmployees(int key)
         {
-            Dictionary<int, List<Employee>> result = new Dictionary<int, List<Employee>>();
-            result.Add(key, employeesByMonth[key]);
-            return result;
+            List<Employee> res = new List<Employee>(employeesByMonth[key]);
+            res.Sort((x, y) => x.getDateBirth().Day.CompareTo(y.getDateBirth().Day));
+            return res;
         }
+
         public bool isElemInDictionary(int key)
         {
             return employeesByMonth.ContainsKey(key);

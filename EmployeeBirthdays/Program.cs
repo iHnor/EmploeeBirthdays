@@ -25,13 +25,15 @@ namespace EmployeeBirthdays
     {
         static void Main(string[] args)
         {
-            int planingHorizon = 12;
+            int planingHorizon = 1;
 
             List<Employee> listOfEmployee = new List<Employee>{
                 (new Employee("Ваня Иванов", new DateTime(2001, 10, 21))),
                 (new Employee("Петя Петров", new DateTime(2008, 11, 12))),
                 (new Employee("Коля Новогодний", new DateTime(2007, 10, 1))),
-                (new Employee("Стас Рождественский", new DateTime(1992, 4, 25)))
+                (new Employee("Стас Рождественский", new DateTime(1992, 4, 11))),
+                (new Employee("Стас Рождественский", new DateTime(1992, 10, 28))),
+                (new Employee("Стас Рождественский", new DateTime(1992, 11, 3)))
             };
 
             EmployeesSorter sorter = new EmployeesSorter(listOfEmployee);
@@ -40,22 +42,19 @@ namespace EmployeeBirthdays
         static void PrintBirthday(EmployeesSorter sorter, int plan)
         {
             DateTime today = DateTime.Now;
-            
+
             for (int j = 0; j <= plan; j++)
             {
                 if (sorter.isElemInDictionary(today.Month))
                 {
-                    foreach (var i in sorter.GetSortEmployees(today.Month))
-                    { 
-                        string month = today.ToString("MMMM", CultureInfo.GetCultureInfo("ru-RU"));
-                        System.Console.WriteLine($"{month} {today.Year}");
-                        foreach (Employee value in i.Value)
-                        {
-                            string day = value.getDateBirth().ToString("dd");
-                            string name = value.getName();
-                            DateTime age = value.getDateBirth();
-                            Console.WriteLine($"({day}) - {name} ({getAge(age, today)})");
-                        }
+                    string month = today.ToString("MMMM", CultureInfo.GetCultureInfo("ru-RU"));
+                    System.Console.WriteLine($"{month} {today.Year}");
+                    foreach (Employee value in sorter.GetSortEmployees(today.Month))
+                    {
+                        string day = value.getDateBirth().ToString("dd");
+                        string name = value.getName();
+                        DateTime age = value.getDateBirth();
+                        Console.WriteLine($"({day}) - {name} ({getAge(age, today)})");
                     }
                 }
 
